@@ -1,26 +1,68 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --imperial-red: #8B0000;
+  --golden-yellow: #FFD700;
+  --ink-green: #2F4F2F;
+  --ivory-white: #FFFFF0;
+  --scroll-beige: #F5F5DC;
+  --ink-black: #2C2C2C;
+  --cloud-gray: #E8E8E8;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-imperial: var(--imperial-red);
+  --color-golden: var(--golden-yellow);
+  --color-ink: var(--ink-green);
+  --color-ivory: var(--ivory-white);
+  --color-scroll: var(--scroll-beige);
+  --color-inkblack: var(--ink-black);
+  --color-cloud: var(--cloud-gray);
+  
+  --color-background: var(--ivory-white);
+  --color-foreground: var(--ink-black);
+  --color-primary: var(--imperial-red);
+  --color-secondary: var(--golden-yellow);
+  --color-accent: var(--ink-green);
+  
+  --border-radius-imperial: 0px;
+  --border-radius-scroll: 4px;
+  
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  
+  --shadow-paper: 0 2px 8px rgba(139, 0, 0, 0.1);
+  --shadow-seal: 0 4px 16px rgba(139, 0, 0, 0.2);
+  
+  --font-sans: system-ui, -apple-system, sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+}
+
+.ming-pattern {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(139, 0, 0, 0.05) 0%, transparent 50%);
+}
+
+.ming-border {
+  border: 2px solid var(--color-golden);
+  border-image: linear-gradient(45deg, var(--color-golden), var(--color-imperial)) 1;
+}
+
+.ming-shadow {
+  box-shadow: var(--shadow-paper);
+}
+
+.ming-shadow-deep {
+  box-shadow: var(--shadow-seal);
 }

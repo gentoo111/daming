@@ -1,0 +1,94 @@
+name: CI/CD - 大明帝国官网
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  quality-check:
+    name: 代码质量检查
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout代码
+      uses: actions/checkout@v4
+      
+    - name: 设置Node.js环境
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'yarn'
+        
+    - name: 安装依赖
+      run: yarn install --frozen-lockfile
+      
+    - name: TypeScript类型检查
+      run: yarn tsc --noEmit
+      
+    - name: ESLint代码规范检查
+      run: yarn lint
+      
+    - name: 构建测试
+      run: yarn build
+      
+    - name: 依赖安全检查
+      run: yarn audit --level moderate
+      continue-on-error: true
+      
+  build-test:
+    name: 构建测试
+    runs-on: ubuntu-latest
+    needs: quality-check
+    
+    steps:
+    - name: Checkout代码
+      uses: actions/checkout@v4
+      
+    - name: 设置Node.js环境  
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'yarn'
+        
+    - name: 安装依赖
+      run: yarn install --frozen-lockfile
+      
+    - name: 生产环境构建
+      run: yarn build
+      
+    - name: 检查构建产物
+      run: |
+        if [ ! -d ".next" ]; then
+          echo "❌ 构建失败：找不到.next目录"
+          exit 1
+        fi
+        echo "✅ 构建成功"
+        
+    - name: 构建产物大小分析
+      run: |
+        echo "📊 构建产物大小分析："
+        du -sh .next/ || echo "无法分析.next目录大小"
+        
+  notify:
+    name: 构建通知
+    runs-on: ubuntu-latest
+    needs: [quality-check, build-test]
+    if: always()
+    
+    steps:
+    - name: 构建成功通知
+      if: ${{ needs.quality-check.result == 'success' && needs.build-test.result == 'success' }}
+      run: |
+        echo "🎉 大明帝国官网构建成功！"
+        echo "✅ 代码质量检查通过"
+        echo "✅ 构建测试通过" 
+        echo "🚀 准备部署到Cloudflare Pages"
+        
+    - name: 构建失败通知
+      if: ${{ needs.quality-check.result == 'failure' || needs.build-test.result == 'failure' }}
+      run: |
+        echo "❌ 大明帝国官网构建失败！"
+        echo "🔍 请检查代码质量或构建错误"
+        exit 1
