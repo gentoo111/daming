@@ -1,5 +1,3 @@
-import { MingCard } from '@/components/ui'
-
 export function MingFooter() {
   return (
     <footer className="w-full bg-inkblack text-ivory py-12">
