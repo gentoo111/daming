@@ -122,6 +122,11 @@ Environment variables:
   - YARN_VERSION=1.22.22
 ```
 
+**重要配置说明**:
+- 必须设置 `Build output directory: out`，因为Next.js静态导出会生成到`out`目录
+- 确保`next.config.ts`中配置了`output: 'export'`
+- 构建命令使用`yarn build`即可，Next.js会自动进行静态导出
+
 ### 3. 部署分支设置
 - **Production branch**: `main`
 - **Preview branches**: `dev`, `staging`（可选）
@@ -270,10 +275,17 @@ yarn build
 - 优化构建命令
 - 减少不必要的依赖
 
-**页面404**:
-- 检查路由配置
-- 确认静态导出设置
-- 验证_redirects文件
+**页面404错误**:
+- 检查`next.config.ts`是否配置了`output: 'export'`
+- 确认Cloudflare Pages的`Build output directory`设置为`out`
+- 验证`_routes.json`文件存在且配置正确
+- 检查静态文件是否正确生成到`out`目录
+
+**修复404问题的步骤**:
+1. 确保本地构建成功：`yarn build`
+2. 检查`out`目录是否包含`index.html`
+3. 在Cloudflare Pages设置中确认输出目录为`out`
+4. 重新部署项目
 
 ### 支持渠道
 - Cloudflare社区论坛
