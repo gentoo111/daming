@@ -60,16 +60,16 @@ jobs:
       
     - name: 检查构建产物
       run: |
-        if [ ! -d ".next" ]; then
-          echo "❌ 构建失败：找不到.next目录"
+        if [ ! -d "out" ]; then
+          echo "❌ 构建失败：找不到 out 目录（静态导出产物）"
           exit 1
         fi
-        echo "✅ 构建成功"
+        echo "✅ 构建成功，已生成 out/ 静态产物"
         
     - name: 构建产物大小分析
       run: |
-        echo "📊 构建产物大小分析："
-        du -sh .next/ || echo "无法分析.next目录大小"
+        echo "📊 构建产物大小分析（out/）："
+        du -sh out/ || echo "无法分析 out 目录大小"
         
   notify:
     name: 构建通知
