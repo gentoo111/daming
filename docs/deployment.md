@@ -181,16 +181,15 @@ Environment variables:
 - **用途**: 本地开发和测试
 - **数据库**: 无（静态页面）
 
-### 预览环境  
-- **URL**: https://branch-name.daming-portal.pages.dev
-- **用途**: Pull Request预览
-- **触发**: 非main分支推送
-
 ### 生产环境
-- **URL**: https://daming-portal.pages.dev
+- **URL**: https://daming.pages.dev/
 - **自定义域名**: https://daming.yourdomain.com
-- **用途**: 正式对外服务
-- **触发**: main分支推送
+
+daming.app 14$
+mingchao.org 7$
+damingonline.org 7$
+damingdiguo.org 7$
+
 
 ## 监控和日志
 
