@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "export": "next build --turbopack"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.10.0",
